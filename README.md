@@ -28,3 +28,13 @@ Each map follows this pattern:
 This solution provides **high performance in terms of time complexity**. However, 
 it introduces **memory overhead** due to the duplication of photo references across multiple maps.
 The same photo may be stored in multiple `HashSet`s (one in each map), increasing memory usage.
+
+## Second Solution: Using a Single HashSet
+
+To minimize memory overhead, I used a single `HashSet` to store all photos.  
+Each photo is stored only once, and searches are performed by iterating through the collection and applying filters.
+
+### Performance
+
+- **Memory usage:** Significantly improved since there is no duplication of photo references.
+- **Time complexity:** Slower compared to the 
