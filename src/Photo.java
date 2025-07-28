@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Photo {
-    private int id ;
+    private String id ;
     private String name ;
     private LocalDate date ;
     private Location location ;
@@ -12,7 +12,7 @@ public class Photo {
     public Photo() {
     }
 
-    public Photo(int id, String name, LocalDate date, Location location, Set<String> tags) {
+    public Photo(String  id, String name, LocalDate date, Location location, Set<String> tags) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -20,11 +20,11 @@ public class Photo {
         this.tags = tags;
     }
 
-    public int getId() {
+    public String  getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String  id) {
         this.id = id;
     }
 
