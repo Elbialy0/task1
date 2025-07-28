@@ -26,6 +26,10 @@ public class PhotoManager {
    public Set<Photo> searchByTag(String tag){
        return photoTag.getOrDefault(tag, Collections.emptySet());
    }
+   public Set<Photo> searchByName(String name){
+       return photoName.getOrDefault(name,Collections.emptySet());
+   }
+
    public Set<Photo> searchByLocation(Location location){
        Set<Photo> photos = new HashSet<>();
        photoLocation.forEach((k,v)->{
