@@ -28,7 +28,7 @@ public class Main {
 //
 //        // Search by location
         System.out.println("Photos taken in Cairo:");
-        manager.searchByLocation(new Location("Cairo",29.9773,31.1325,20)).forEach(System.out::println);
+        manager.searchByLocation("Cairo").forEach(System.out::println);
 
         // Search by multiple tags
         System.out.println("Photos with tags [egypt, museum]:");

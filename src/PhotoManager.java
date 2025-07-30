@@ -6,6 +6,7 @@ public class PhotoManager {
    private HashMap<Location, Set<Photo>> photoLocation;
    private HashMap<LocalDate, Set<Photo>> photoDate;
    private HashMap<String , Set<Photo>> photoName;
+   private HashMap<String, Location> locationMap;
 
 
    public PhotoManager() {
@@ -13,6 +14,7 @@ public class PhotoManager {
        this.photoLocation = new HashMap<>();
        this.photoDate = new HashMap<>();
        this.photoName = new HashMap<>();
+       this.locationMap = new HashMap<>();
    }
    public void uploadPhoto(Photo photo) {
        photo.getTags().forEach(tag -> {
@@ -21,6 +23,7 @@ public class PhotoManager {
        photoLocation.computeIfAbsent(photo.getLocation(), k -> new HashSet<>()).add(photo);
        photoDate.computeIfAbsent(photo.getDate(), k -> new HashSet<>()).add(photo);
        photoName.computeIfAbsent(photo.getName(), k -> new HashSet<>()).add(photo);
+       locationMap.computeIfAbsent(photo.getLocation().getName(), k -> photo.getLocation());
 
    }
    public Set<Photo> searchByTag(String tag){
@@ -30,17 +33,20 @@ public class PhotoManager {
        return photoName.getOrDefault(name,Collections.emptySet());
    }
 
-   public Set<Photo> searchByLocation(Location location){
+   public Set<Photo> searchByLocation(String location){
+
+       Location searchLocation = locationMap.getOrDefault(location,null);
+       if(searchLocation==null){
+           return Collections.emptySet();
+       }
        Set<Photo> photos = new HashSet<>();
        photoLocation.forEach((k,v)->{
-           double distance = getDistance(location,k);
-           if(distance<=location.getRedius()){
+           if(getDistance(searchLocation,k)<=k.getRedius()){
                photos.addAll(v);
            }
-
-
        });
        return photos;
+
    }
    public Set<Photo> searchByDate(LocalDate date){
        return photoDate.getOrDefault(date, Collections.emptySet());
