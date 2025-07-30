@@ -5,12 +5,15 @@ import java.util.stream.Collectors;
 public class PhotoManager {
 
     private Set<Photo> photos;
+    private Map<String, Location> locationMap;
 
     public PhotoManager() {
         photos = new HashSet<>();
+        locationMap = new HashMap<>();
     }
     public void uploadPhoto(Photo photo) {
         photos.add(photo);
+        locationMap.put(photo.getLocation().getName(), photo.getLocation());
     }
     public List<Photo> searchByTag(String tag){
         List<Photo> searchPhotos = new ArrayList<>();
@@ -29,10 +32,12 @@ public class PhotoManager {
     public List<Photo> searchByMonthAndYear(int month, int year){
         return photos.stream().filter(photo ->  photo.getDate().getMonthValue() == month && photo.getDate().getYear() == year).toList();
     }
-    public List<Photo> searchByLocation(Location location){
-        return photos.stream().filter(photo -> getDistance(photo.getLocation(),location)<=location.getRedius()).toList();
+    public List<Photo> searchByLocation(String location){
+        Location searchLocation = locationMap.get(location);
+        if (location == null) return null;
+        return photos.stream().filter(photo -> getDistance(photo.getLocation(), searchLocation) <= searchLocation.getRedius()).toList();
     }
-    public List<Photo> searchByMultipleTags(Set<String> tags){
+    public List<Photo> searchByMultipleTags(Set<String> tags){ // And
         return photos.stream().filter(photo -> photo.getTags().containsAll(tags)).toList();
     }
     private double getDistance(Location location, Location k) {
